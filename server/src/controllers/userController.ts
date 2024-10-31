@@ -135,3 +135,34 @@ export const userLogout = async (req: Request, res: Response, next: NextFunction
         next(error);
     }
 }
+
+
+
+export const uploadImage = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+        let { image } = req.body;
+
+        let token = req.cookies.token;
+
+        let decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as DecodedTokenType;
+
+        if (!image) {
+            res.status(404).json({ message: "Image is missing" });
+            return;
+        }
+
+        const updatedUser = await userModel.findByIdAndUpdate(decodedToken.id, { image });
+
+        if (!updatedUser) {
+            res.status(404).json({ message: "Image is missing" });
+            return;
+        }
+
+
+        res.status(200).json({message:"user Profile update successfully",image})
+        
+    } catch (error) {
+        next(error);
+    }
+}

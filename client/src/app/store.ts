@@ -2,6 +2,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import manageUserSlice from '../features/admin/manageUserSlice'; 
 import storage from "redux-persist/lib/storage"; 
 import { persistReducer, persistStore } from "redux-persist"; 
+import userReducer from '../features/user/userSlice';
+
+
 
 const persistConfig = {
     key: "root",
@@ -9,7 +12,8 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-    admin: manageUserSlice, // Fixed typo
+    admin: manageUserSlice, 
+    user:userReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer); // Fixed variable name

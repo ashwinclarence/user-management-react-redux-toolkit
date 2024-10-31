@@ -13,7 +13,6 @@ export const verifyToken = async(req:Request, res:Response, next:NextFunction):P
 
         let jwtSecretKey = process.env.JWT_SECRET || '';
         const decodedToken = await jwt.verify(token, jwtSecretKey);
-
         if (decodedToken) {
             next();
         } else {

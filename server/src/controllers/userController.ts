@@ -94,13 +94,30 @@ export const userLogin = async(req: Request, res: Response, next: NextFunction):
     }
 }
 
+type DecodedTokenType = {
+    id: string;
+    email: string;
+    name: string;
+    iat: number;
+    exp: number;
+}
 
 
 
-export const getProfile = async (req:Request,res:Response,next:NextFunction) => {
+export const getProfile = async (req:Request,res:Response,next:NextFunction):Promise<void> => {
     try {
 
-        res.status(200).json({ message: "profile details fetched successfully" });
+        let token = req.cookies.token;
+
+        let decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as DecodedTokenType;
+
+        let userDetails = await userModel.findOne({_id:decodedToken.id},{password:0});
+        if (!userDetails) {
+            res.status(400).json({ message: "Cannot get the user Profile details" });
+            return;
+        }
+
+        res.status(200).json({ message: "profile details fetched successfully" ,user:userDetails});
         
     } catch (error) {
         next(error);

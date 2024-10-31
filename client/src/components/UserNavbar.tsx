@@ -1,17 +1,23 @@
-import React from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../lib/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../app/store";
+import { onLogout } from "../features/user/userSlice";
 
 export const UserNavbar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const isLogin = useSelector((state: RootState) => state.user.isLogin);
 
   const handleLogout = async () => {
     try {
       let response = await axiosInstance.post("/api/logout", {});
 
       if (response.data) {
-        toast.success("logout successfully");
+        toast.success(response.data.message);
+        dispatch(onLogout());
         navigate("/");
       }
     } catch (error: any) {
@@ -73,22 +79,25 @@ export const UserNavbar = () => {
                 Profile
               </Link>
             </li>
-            <li>
-              <Link
-                to="/login"
-                className="block py-2 px-3 text-blue-700 bg-blue-700 rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500"
-              >
-                Login
-              </Link>
-            </li>
-            <li>
-              <button
-                onClick={handleLogout}
-                className="block py-2 px-3 text-blue-700 bg-blue-700 rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500"
-              >
-                Logout
-              </button>
-            </li>
+            {isLogin ? (
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="block py-2 px-3 text-blue-700 bg-blue-700 rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500"
+                >
+                  Logout
+                </button>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  to="/"
+                  className="block py-2 px-3 text-blue-700 bg-blue-700 rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500"
+                >
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

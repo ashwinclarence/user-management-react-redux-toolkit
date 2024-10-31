@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {  setLoading } from "../features/admin/manageUserSlice";
 import axiosInstance from "../lib/axios";
 import { UserNavbar } from "./UserNavbar";
+import { onLogin } from "../features/user/userSlice";
 
 const UserLogin = () => {
   const [loginDetails, setLoginDetails] = useState({
@@ -34,6 +35,8 @@ const UserLogin = () => {
 
       if (response.data.success) { 
         toast.success("login successful");
+        let user:string = response.data.user.name ;
+        dispatch(onLogin({ email: loginDetails.username, name: user, isLogin: true }));
         navigate('/home');
       }
 
@@ -50,18 +53,22 @@ const UserLogin = () => {
     <>
       <UserNavbar />
       <div className="flex items-center justify-center min-h-screen ">
-        <form className="bg-white shadow-lg border rounded-lg p-8 w-96">
+        <form className="bg-white shadow-lg border rounded-lg p-8 w-96" onSubmit={handleUserLogin}>
           <h2 className="text-3xl text-center font-bold text-gray-800 mb-6">Login</h2>
           <input
             type="text"
             className="border w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
             placeholder="Username"
+            value={loginDetails.username}
+            onChange={(e)=>setLoginDetails({...loginDetails,username:e.target.value})}
             required
-          />
+            />
           <input
             type="password"
             className="border w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
             placeholder="Password"
+            value={loginDetails.password}
+            onChange={(e)=>setLoginDetails({...loginDetails,password:e.target.value})}
             required
           />
           <button

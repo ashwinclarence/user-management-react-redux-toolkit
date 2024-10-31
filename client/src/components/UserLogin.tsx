@@ -48,36 +48,37 @@ const UserLogin = () => {
 
   return (
     <>
-      <UserNavbar/>
-    <div className="flex items-center justify-center min-h-screen">
-      <form
-        onSubmit={handleUserLogin}
-        className="flex border rounded-md p-6 flex-col gap-6"
-        >
-              <h2 className="text-4xl text-center">Login Form user</h2>
-        <input
-          type="text"
-          className="border w-full p-2"
-          value={loginDetails.username}
-          onChange={(e) =>
-            setLoginDetails({ ...loginDetails, username: e.target.value })
-          }
-          placeholder="username"
+      <UserNavbar />
+      <div className="flex items-center justify-center min-h-screen ">
+        <form className="bg-white shadow-lg border rounded-lg p-8 w-96">
+          <h2 className="text-3xl text-center font-bold text-gray-800 mb-6">Login</h2>
+          <input
+            type="text"
+            className="border w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+            placeholder="Username"
+            required
           />
-        <input
-          type="password"
-          className="border w-full p-2"
-          value={loginDetails.password}
-          onChange={(e) =>
-            setLoginDetails({ ...loginDetails, password: e.target.value })
-          }
-                  placeholder="password"
-        />
-        <button type="submit" className="bg-blue-500 rounded-md p-2 ">Login</button>
-        <p>Dont have an account <Link to='/signup' className="text-blue-800 font-bold" >Sign up</Link></p>
-      </form>
-    </div>
-          </>
+          <input
+            type="password"
+            className="border w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+            placeholder="Password"
+            required
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white font-semibold rounded-md p-3 w-full hover:bg-blue-700 transition duration-200 ease-in-out"
+          >
+            Login
+          </button>
+          <p className="text-center mt-4">
+            Don’t have an account?{' '}
+            <Link to="/signup" className="text-blue-600 font-semibold hover:underline">
+              Sign up
+            </Link>
+          </p>
+        </form>
+      </div>
+    </>
   );
 };
 

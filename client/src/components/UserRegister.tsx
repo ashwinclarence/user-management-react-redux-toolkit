@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../lib/axios";
+import { UserNavbar } from "./UserNavbar";
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -41,44 +42,57 @@ const UserRegister = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <form
-        onSubmit={handleRegister}
-        className="border p-6 rounded-md flex flex-col gap-8"
-          >
-              <h2 className="text-center text-4xl font-semibold">Sign Up </h2>
-        <input
-          type="text"
-          className="border-2 p-2 rounded-md border-black"
-          placeholder="Enter full name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required
-        />
-        <input
-          type="email"
-          className="border-2 p-2 rounded-md border-black"
-          placeholder="Enter email address"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          required
-        />
-        <input
-          type="password"
-          className="border-2 p-2 rounded-md border-black"
-          placeholder="Enter password"
-          min={6}
-          max={20}
-          value={formData.password}
-          onChange={(e) =>
-            setFormData({ ...formData, password: e.target.value })
-          }
-          required
-              />
-              <button className="border py-2 px-6 rounded-md bg-red-600 text-white">sign up</button>
-              <p>already have an account <Link to={'/'} className="text-blue-600 font-semibold">login </Link></p>
-      </form>
-    </div>
+    <>
+      <UserNavbar />
+      <div className="flex flex-col items-center justify-center min-h-screen ">
+    <form
+      onSubmit={handleRegister}
+      className="bg-white shadow-lg rounded-lg p-8 w-96 flex flex-col gap-6 border"
+    >
+      <h2 className="text-center text-4xl font-semibold text-gray-800">Sign Up</h2>
+      
+      <input
+        type="text"
+        className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter full name"
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        required
+      />
+      
+      <input
+        type="email"
+        className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter email address"
+        value={formData.email}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        required
+      />
+      
+      <input
+        type="password"
+        className="border-2 border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        placeholder="Enter password"
+        minLength={6}
+        maxLength={20}
+        value={formData.password}
+        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        required
+      />
+      
+      <button className="bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 transition duration-200">
+        Sign Up
+      </button>
+      
+      <p className="text-center">
+        Already have an account? 
+        <Link to={'/'} className="text-blue-600 font-semibold hover:underline">
+          Login
+        </Link>
+      </p>
+    </form>
+  </div>
+    </>
   );
 };
 

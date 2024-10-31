@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type UserType = {
-  username: string;
-  password: string;
+  name: string;
+  email: string;
+  id: string;
 };
 
 type InitialStateType = {
@@ -21,15 +22,12 @@ const ManageUserSlice = createSlice({
   name: "ManageUser",
   initialState,
   reducers: {
-    addUser: (state, action: PayloadAction<UserType>) => {
-      state.users.push(action.payload);
+    addUser: (state, action: PayloadAction<UserType[]>) => {
+      state.users = action.payload;
     },
-    deleteUser: (state, action: PayloadAction<UserType>) => {
+    deleteUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter((ele) => {
-        if (
-          ele.username !== action.payload.username &&
-          ele.password !== action.payload.password
-        ) {
+        if (ele.id!==action.payload) {
           return ele;
         }
       });
@@ -43,6 +41,5 @@ const ManageUserSlice = createSlice({
   },
 });
 
-export const { addUser, deleteUser, setError, setLoading } =
-  ManageUserSlice.actions;
+export const { addUser, deleteUser, setError, setLoading } =ManageUserSlice.actions;
 export default ManageUserSlice.reducer;

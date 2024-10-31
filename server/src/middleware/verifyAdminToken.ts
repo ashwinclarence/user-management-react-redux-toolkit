@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 
-export const verifyToken = async(req:Request, res:Response, next:NextFunction):Promise<void> => {
+export const verifyAdminToken = async(req:Request, res:Response, next:NextFunction):Promise<void> => {
     try {
 
-        const token = req.cookies.token;
+        const token = req.cookies.adminToken;
         if (!token) {
             res.status(404).json({ message: "Token is missing" });
             return;
